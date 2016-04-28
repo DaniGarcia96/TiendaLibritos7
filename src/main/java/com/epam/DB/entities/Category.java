@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by aga on 27.04.16.
  */
 @Entity
-@Table (name = "Category")
+@Table (name = "category")
 public class Category implements Serializable {
 
     @Id

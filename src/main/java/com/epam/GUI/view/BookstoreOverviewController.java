@@ -4,6 +4,7 @@
 
 package com.epam.GUI.view;
 
+import com.epam.DB.DAO;
 import com.epam.GUI.model.Bookstore;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class BookstoreOverviewController {
     Bookstore data = new Bookstore();
     Set <String> categoriesToShow = new HashSet<>();
+    Set <String> bookstoresToShow = new HashSet<>();
     @FXML
     private CheckBox romanceCat;
     @FXML
@@ -53,8 +55,8 @@ public class BookstoreOverviewController {
         String selectedItem = bookstores.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             listViewBookstores.remove(selectedItem);
-
             listViewActiveBookstores.add(selectedItem);
+            bookstoresToShow.add(selectedItem);
         }
     }
     /**
@@ -66,6 +68,7 @@ public class BookstoreOverviewController {
         if (selectedItem != null) {
             listViewActiveBookstores.remove(selectedItem);
             listViewBookstores.add(selectedItem);
+            bookstoresToShow.remove(selectedItem);
         }
     }
     /**
@@ -117,11 +120,12 @@ public class BookstoreOverviewController {
      */
     @FXML
     private void showBooksButtonAction(ActionEvent action) {
-        setText(categoriesToShow.toString());
+        DAO fetchBooks = new DAO ();
+        String result = fetchBooks.setTextArea(categoriesToShow, bookstoresToShow);
+
+        listOfBooks.setText(result);
     }
-    public void setText(String text) {
-        listOfBooks.setText(text);
-    }
+
 
     @FXML
     void initialize() {
